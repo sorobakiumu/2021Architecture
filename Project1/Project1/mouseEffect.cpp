@@ -1,7 +1,7 @@
 #include <DxLib.h>
 #include "mouseEffect.h"
 
-const int vecMax = 30;
+const int vecMax = 60;
 
 Vector2 oldPos[vecMax];
 
