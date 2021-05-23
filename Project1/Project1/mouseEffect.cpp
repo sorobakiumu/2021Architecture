@@ -1,7 +1,8 @@
 #include <DxLib.h>
+#include <random>
 #include "mouseEffect.h"
 
-const int vecMax = 60;
+const int vecMax = 30;
 
 Vector2 oldPos[vecMax];
 
@@ -36,14 +37,17 @@ void mouseEffect::Init()
 
 void mouseEffect::Run()
 {
+	//現在座標取得
 	int x, y;
 	GetMousePoint(&x, &y);
 	for (int n = 0; n < vecMax; n++) {
-		DrawCircle(oldPos[n].x, oldPos[n].y, pointR, 0xaaaaaa);
+		DrawCircle(oldPos[n].x, oldPos[n].y, pointR, 0xffff00);
 	}
 	DrawCircle(x, y, pointR, 0xffffff);
-	oldPos[crrentNum % vecMax].x = x;
-	oldPos[crrentNum % vecMax].y = y;
+	//座標履歴に追加
+	oldPos[crrentNum % vecMax].x = x + std::rand() % 10 - 5;
+	oldPos[crrentNum % vecMax].y = y + std::rand() % 10 - 5;
+	//左クリックの押下情報
 	if ((GetMouseInput() & MOUSE_INPUT_LEFT) != 0) {
 		mousenow = true;
 	}
@@ -69,8 +73,6 @@ void mouseEffect::Run()
 		}
 	}
 	mouseold = mousenow;
-	//if (abs(oldPos[(vecMax + crrentNum-1) % vecMax].x - x) > 0 && abs(oldPos[(vecMax+crrentNum-1) % vecMax].y - y) > 0) {
 	crrentNum++;
-	//}
 }
 
